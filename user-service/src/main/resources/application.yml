@@ -1,0 +1,38 @@
+server:
+  port: 8091
+spring:
+  output:
+    ansi:
+      enabled: always
+  datasource:
+    initialization-mode: never # always / embedded / never
+    ###------------------------------------------------------------------------------------------###
+    #  H2 database config
+    ###------------------------------------------------------------------------------------------###
+    #    # database is in memory
+    #    url: jdbc:h2:mem:home
+    #    # database is stored in file
+    #    # url: jdbc:h2:file:/data/demo
+    #    username: sa
+    #    password: password
+    #    driverClassName: org.h2.Driver
+    ###------------------------------------------------------------------------------------------###
+    #  Postgres database config
+    ###------------------------------------------------------------------------------------------###
+    url: jdbc:postgresql://192.168.1.3:5432/home
+    username: postgres
+    password: 1995
+    driverClassName: org.postgresql.Driver
+  jpa:
+    #    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        default_schema: hm_user
+    hibernate:
+      ddl-auto: validate # Hibernate ddl auto (create, create-drop, validate, update)
+logging:
+  level:
+    org.hibernate:
+      SQL: DEBUG
+      type: TRACE
