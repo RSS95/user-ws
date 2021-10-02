@@ -1,3 +1,4 @@
 # Project exclude paths
 /user-api/target/
 /user-service/target/
+.idea

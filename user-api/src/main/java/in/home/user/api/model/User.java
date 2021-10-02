@@ -14,8 +14,8 @@ public class User {
   private String password;
   private boolean active;
   private LocalDateTime createdOn;
-  private String createdBy;
+  private Long createdBy;
   private LocalDateTime updatedOn;
-  private String updatedBy;
+  private Long updatedBy;
   private List<Role> roleList;
 }
