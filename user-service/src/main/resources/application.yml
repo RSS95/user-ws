@@ -19,7 +19,7 @@ spring:
     ###------------------------------------------------------------------------------------------###
     #  Postgres database config
     ###------------------------------------------------------------------------------------------###
-    url: jdbc:postgresql://192.168.1.103:5432/home
+    url: jdbc:postgresql://192.168.1.3:5432/home
     username: postgres
     password: 1995
     driverClassName: org.postgresql.Driver
