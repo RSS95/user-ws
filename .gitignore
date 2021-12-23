@@ -2,3 +2,6 @@
 /user-api/target/
 /user-service/target/
 .idea
+/user-api/user-api.iml
+/user-service/user-service.iml
+/user-ws.iml
