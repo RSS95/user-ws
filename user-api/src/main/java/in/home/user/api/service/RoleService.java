@@ -1,6 +1,7 @@
 package in.home.user.api.service;
 
 import in.home.user.api.model.Role;
+import in.home.user.api.query.role.RoleQuery;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,4 +26,10 @@ public interface RoleService {
 
   @PostMapping(value = "/findById")
   Role findById(@RequestBody Long roleId);
+
+  @PostMapping(value = "/count")
+  Long count(@RequestBody RoleQuery roleQuery);
+
+  @PostMapping(value = "/fetch")
+  List<Role> fetch(@RequestBody RoleQuery roleQuery);
 }

@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -22,5 +22,5 @@ public class User {
   private Long createdBy;
   private LocalDateTime updatedOn;
   private Long updatedBy;
-  private List<Role> roleList;
+  private Set<Role> roleSet;
 }

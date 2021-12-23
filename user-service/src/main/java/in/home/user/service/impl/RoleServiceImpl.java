@@ -1,6 +1,7 @@
 package in.home.user.service.impl;
 
 import in.home.user.api.model.Role;
+import in.home.user.api.query.role.RoleQuery;
 import in.home.user.api.service.RoleService;
 import in.home.user.service.entity.RoleEntity;
 import in.home.user.service.repository.RoleRepository;
@@ -72,5 +73,22 @@ public class RoleServiceImpl implements RoleService {
       return role;
     }
     return null;
+  }
+
+  @Override
+  public Long count(RoleQuery roleQuery) {
+    return roleRepository.count(roleQuery);
+  }
+
+  @Override
+  public List<Role> fetch(RoleQuery roleQuery) {
+    List<RoleEntity> roleEntityList = roleRepository.fetch(roleQuery);
+    List<Role> roleList = new ArrayList<>();
+    for (RoleEntity roleEntity : roleEntityList) {
+      Role role = new Role();
+      roleEntity.copyToDTO(role);
+      roleList.add(role);
+    }
+    return roleList;
   }
 }
