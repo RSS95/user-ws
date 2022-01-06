@@ -33,6 +33,8 @@ spring:
       ddl-auto: validate # Hibernate ddl auto (create, create-drop, validate, update)
 logging:
   level:
+    root: WARN
+    in.home: TRACE
     org.hibernate:
-      SQL: DEBUG
-      type: TRACE
+      SQL: INFO
+      type: INFO

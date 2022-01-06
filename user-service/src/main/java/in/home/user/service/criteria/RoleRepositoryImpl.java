@@ -19,65 +19,65 @@ import java.util.List;
 @Repository
 public class RoleRepositoryImpl implements RoleRepositoryCustom {
 
-  @Autowired private EntityManager entityManager;
+    @Autowired
+    private EntityManager entityManager;
 
-  @Override
-  public Long count(RoleQuery roleQuery) {
-    CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-    CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
-    Root<RoleEntity> root = criteriaQuery.from(RoleEntity.class);
-    criteriaQuery.select(criteriaBuilder.count(root));
+    @Override
+    public Long count(RoleQuery roleQuery) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        Root<RoleEntity> root = criteriaQuery.from(RoleEntity.class);
+        criteriaQuery.select(criteriaBuilder.count(root));
 
-    createCriteriaQuery(criteriaBuilder, criteriaQuery, root, roleQuery);
+        createCriteriaQuery(criteriaBuilder, criteriaQuery, root, roleQuery);
 
-    TypedQuery<Long> query = entityManager.createQuery(criteriaQuery);
-    return query.getSingleResult();
-  }
-
-  @Override
-  public List<RoleEntity> fetch(RoleQuery roleQuery) {
-    CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-    CriteriaQuery<RoleEntity> criteriaQuery = criteriaBuilder.createQuery(RoleEntity.class);
-    Root<RoleEntity> root = criteriaQuery.from(RoleEntity.class);
-    criteriaQuery.select(root);
-
-    createCriteriaQuery(criteriaBuilder, criteriaQuery, root, roleQuery);
-
-    TypedQuery<RoleEntity> query = entityManager.createQuery(criteriaQuery);
-    if (roleQuery.getPagination().getOffset() != null
-        && roleQuery.getPagination().getLimit() != null) {
-      return query
-          .setFirstResult(roleQuery.getPagination().getOffset().intValue())
-          .setMaxResults(roleQuery.getPagination().getLimit().intValue())
-          .getResultList();
-    } else {
-      return query.getResultList();
+        TypedQuery<Long> query = entityManager.createQuery(criteriaQuery);
+        return query.getSingleResult();
     }
-  }
 
-  private <T> void createCriteriaQuery(
-      CriteriaBuilder criteriaBuilder,
-      CriteriaQuery<T> criteriaQuery,
-      Root<RoleEntity> root,
-      RoleQuery roleQuery) {
+    @Override
+    public List<RoleEntity> fetch(RoleQuery roleQuery) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<RoleEntity> criteriaQuery = criteriaBuilder.createQuery(RoleEntity.class);
+        Root<RoleEntity> root = criteriaQuery.from(RoleEntity.class);
+        criteriaQuery.select(root);
 
-    if (!CollectionUtils.isEmpty(roleQuery.getRoleFilter().getIdList())) {
-      criteriaQuery.where(root.get(BaseEntity_.ID).in(roleQuery.getRoleFilter().getIdList()));
+        createCriteriaQuery(criteriaBuilder, criteriaQuery, root, roleQuery);
+
+        TypedQuery<RoleEntity> query = entityManager.createQuery(criteriaQuery);
+        if (roleQuery.getPagination().getOffset() != null &&
+            roleQuery.getPagination().getLimit() != null) {
+            return query.setFirstResult(roleQuery.getPagination().getOffset().intValue())
+                        .setMaxResults(roleQuery.getPagination().getLimit().intValue())
+                        .getResultList();
+        }
+        else {
+            return query.getResultList();
+        }
     }
-    if (!CollectionUtils.isEmpty(roleQuery.getRoleFilter().getRoleNameListIn())) {
-      criteriaQuery.where(
-          root.get(RoleEntity_.ROLE_NAME).in(roleQuery.getRoleFilter().getRoleNameListIn()));
+
+    private <T> void createCriteriaQuery(CriteriaBuilder criteriaBuilder,
+                                         CriteriaQuery<T> criteriaQuery, Root<RoleEntity> root,
+                                         RoleQuery roleQuery) {
+
+        if (!CollectionUtils.isEmpty(roleQuery.getRoleFilter().getIdList())) {
+            criteriaQuery.where(root.get(BaseEntity_.ID).in(roleQuery.getRoleFilter().getIdList()));
+        }
+        if (!CollectionUtils.isEmpty(roleQuery.getRoleFilter().getRoleNameListIn())) {
+            criteriaQuery.where(root.get(RoleEntity_.ROLE_NAME)
+                                    .in(roleQuery.getRoleFilter().getRoleNameListIn()));
+        }
+        if (!CollectionUtils.isEmpty(roleQuery.getRoleFilter().getRoleNameListLike())) {
+            CriteriaBuilder.In<Object> inClause = criteriaBuilder.in(
+                    root.get(RoleEntity_.ROLE_NAME));
+            for (String roleName : roleQuery.getRoleFilter().getRoleNameListLike()) {
+                inClause.value(criteriaBuilder.like(root.get(RoleEntity_.ROLE_NAME),
+                                                    "%" + roleName + "%"));
+            }
+        }
+        if (roleQuery.getRoleFilter().getActive() != null) {
+            criteriaQuery.where(criteriaBuilder.equal(root.get(BaseEntity_.ACTIVE),
+                                                      roleQuery.getRoleFilter().getActive()));
+        }
     }
-    if (!CollectionUtils.isEmpty(roleQuery.getRoleFilter().getRoleNameListLike())) {
-      CriteriaBuilder.In<Object> inClause = criteriaBuilder.in(root.get(RoleEntity_.ROLE_NAME));
-      for (String roleName : roleQuery.getRoleFilter().getRoleNameListLike()) {
-        inClause.value(criteriaBuilder.like(root.get(RoleEntity_.ROLE_NAME), "%" + roleName + "%"));
-      }
-    }
-    if (roleQuery.getRoleFilter().getActive() != null) {
-      criteriaQuery.where(
-          criteriaBuilder.equal(
-              root.get(BaseEntity_.ACTIVE), roleQuery.getRoleFilter().getActive()));
-    }
-  }
 }
