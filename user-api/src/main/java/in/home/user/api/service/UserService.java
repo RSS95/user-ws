@@ -5,34 +5,32 @@ import in.home.user.api.query.user.UserQuery;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RequestMapping(value = "/user")
 public interface UserService {
 
-  @PostMapping(value = "/save")
+  @PostMapping(value = "/user-ws/user/save")
   User save(@RequestBody User user);
 
-  @PostMapping(value = "/saveAll")
+  @PostMapping(value = "/user-ws/user/saveAll")
   List<User> saveAll(@RequestBody List<User> userList);
 
-  @PostMapping(value = "/loadUserByUsernameWithPassword")
+  @PostMapping(value = "/user-ws/user/loadUserByUsernameWithPassword")
   User loadUserByUsernameWithPassword(@RequestBody String userName);
 
-  @PostMapping(value = "/loadUserByUsernameWithoutPassword")
+  @PostMapping(value = "/user-ws/user/loadUserByUsernameWithoutPassword")
   User loadUserByUsernameWithoutPassword(@RequestBody String userName);
 
-  @GetMapping(value = "/findAll")
+  @GetMapping(value = "/user-ws/user/findAll")
   List<User> findAll();
 
-  @PostMapping(value = "/findById")
+  @PostMapping(value = "/user-ws/user/findById")
   User findById(@RequestBody Long userId);
 
-  @PostMapping(value = "/count")
+  @PostMapping(value = "/user-ws/user/count")
   Long count(@RequestBody UserQuery userQuery);
 
-  @PostMapping(value = "/fetch")
+  @PostMapping(value = "/user-ws/user/fetch")
   List<User> fetch(@RequestBody UserQuery userQuery);
 }

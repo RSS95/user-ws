@@ -5,49 +5,47 @@ import in.home.user.api.query.role.RoleQuery;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RequestMapping(value = "/role")
 public interface RoleService {
 
-    @PostMapping(value = "/save")
+    @PostMapping(value = "/user-ws/role/save")
     Role save(@RequestBody Role role);
 
-    @PostMapping(value = "/saveAll")
+    @PostMapping(value = "/user-ws/role/saveAll")
     List<Role> saveAll(@RequestBody List<Role> roleList);
 
-    @PostMapping(value = "/loadUserByRoleName")
+    @PostMapping(value = "/user-ws/role/loadUserByRoleName")
     Role loadUserByRoleName(@RequestBody String roleName);
 
-    @GetMapping(value = "/findAll")
+    @GetMapping(value = "/user-ws/role/findAll")
     List<Role> findAll();
 
-    @PostMapping(value = "/findById")
+    @PostMapping(value = "/user-ws/role/findById")
     Role findById(@RequestBody Long roleId);
 
-    @PostMapping(value = "/count")
+    @PostMapping(value = "/user-ws/role/count")
     Long count(@RequestBody RoleQuery roleQuery);
 
-    @PostMapping(value = "/fetch")
+    @PostMapping(value = "/user-ws/role/fetch")
     List<Role> fetch(@RequestBody RoleQuery roleQuery);
 
-    @PostMapping(value = "/delete")
+    @PostMapping(value = "/user-ws/role/delete")
     void delete(@RequestBody Long id);
 
-    @PostMapping(value = "/deleteAll")
+    @PostMapping(value = "/user-ws/role/deleteAll")
     void deleteAll(@RequestBody List<Long> idList);
 
-    @PostMapping(value = "/activate")
+    @PostMapping(value = "/user-ws/role/activate")
     boolean activate(@RequestBody Long id);
 
-    @PostMapping(value = "/activateAll")
+    @PostMapping(value = "/user-ws/role/activateAll")
     boolean activateAll(@RequestBody List<Long> idList);
 
-    @PostMapping(value = "/deactivate")
+    @PostMapping(value = "/user-ws/role/deactivate")
     boolean deactivate(@RequestBody Long id);
 
-    @PostMapping(value = "/deactivateAll")
+    @PostMapping(value = "/user-ws/role/deactivateAll")
     boolean deactivateAll(@RequestBody List<Long> idList);
 }

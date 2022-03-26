@@ -1,5 +1,5 @@
 server:
-  port: 8091
+  port: 8090
 spring:
   output:
     ansi:
@@ -31,10 +31,21 @@ spring:
         default_schema: hm_user
     hibernate:
       ddl-auto: validate # Hibernate ddl auto (create, create-drop, validate, update)
+  main:
+    allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://auth-server:8090
+
 logging:
   level:
-    root: WARN
+    root: INFO
     in.home: TRACE
-    org.hibernate:
-      SQL: INFO
-      type: INFO
+    org.hibernate: WARN
+    #      SQL: DEBUG
+    #      type: TRACE
+    org.springframework.web: TRACE
+    org.springframework.security: TRACE
+    org.springframework.security.oauth2: TRACE
